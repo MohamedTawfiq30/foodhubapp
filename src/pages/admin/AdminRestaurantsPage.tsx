@@ -59,7 +59,7 @@ export default function AdminRestaurantsPage() {
     if (dropzoneProps.successes.length > 0) {
       const fileName = dropzoneProps.successes[0];
       const { data } = supabase.storage
-        .from('app-a04i0mry03k1_food_images')
+        .from(STORAGE_BUCKET_NAME)
         .getPublicUrl(fileName);
       setFormData({ ...formData, image_url: data.publicUrl });
       toast.success('Image uploaded successfully');

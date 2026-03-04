@@ -109,17 +109,41 @@ A complete food ordering platform similar to Swiggy/Zomato, featuring separate c
 - Clean API structure
 - Role-based access control
 
-## 4. Deployment Requirements
+## 4. Supabase Integration Guide
 
-### 4.1 Supabase Integration
-- Connect user's Supabase account to the application
-- Configure Supabase project URL and API keys
-- Set up required database tables and schemas
-- Configure authentication settings
-- Set up storage buckets for image uploads
+### 4.1 Prerequisites
+- Create a Supabase account at https://supabase.com
+- Create a new Supabase project
+- Obtain your project URL and API keys from project settings
 
-### 4.2 Vercel Deployment
+### 4.2 Database Setup
+- Create required tables: users, food_items, categories, orders, restaurants
+- Configure table schemas with appropriate columns and data types
+- Set up relationships between tables using foreign keys
+- Enable Row Level Security (RLS) policies for each table
+- Configure authentication settings in Supabase Auth
+
+### 4.3 Storage Configuration
+- Create storage buckets for food item images and restaurant images
+- Configure bucket policies for public access to images
+- Set up appropriate file size and type restrictions
+
+### 4.4 Application Configuration
+- Add Supabase project URL to application environment variables
+- Add Supabase anon/public API key to application environment variables
+- Initialize Supabase client in the application with these credentials
+- Configure authentication flows using Supabase Auth methods
+
+### 4.5 API Integration
+- Use Supabase client methods for database operations (select, insert, update, delete)
+- Implement real-time subscriptions for order status updates
+- Use Supabase Storage API for image upload and retrieval
+- Handle authentication state changes and token management
+
+## 5. Deployment Requirements
+
+### 5.1 Vercel Deployment
 - Deploy application to Vercel platform
-- Configure environment variables for Supabase connection
+- Configure environment variables for Supabase connection (SUPABASE_URL, SUPABASE_ANON_KEY)
 - Set up continuous deployment from repository
 - Configure domain settings if applicable
