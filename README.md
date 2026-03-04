@@ -1,91 +1,171 @@
-# Welcome to Your Miaoda Project
+# Food Ordering System
 
-## Project Info
+A complete food ordering platform similar to Swiggy/Zomato with separate client and admin interfaces, built with React, TypeScript, Tailwind CSS, and Supabase.
 
-## Project Directory
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- Supabase account
+- Vercel account (for deployment)
+
+### Local Development
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd food-ordering-system
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your Supabase credentials
+   ```
+
+4. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open browser**
+   ```
+   http://localhost:5173
+   ```
+
+## 📚 Documentation
+
+- **[Deployment Quick Start](DEPLOYMENT_QUICKSTART.md)** - 3-step deployment guide
+- **[Supabase Connection Guide](SUPABASE_CONNECTION_GUIDE.md)** - Complete Supabase setup
+- **[Vercel Deployment Guide](VERCEL_DEPLOYMENT.md)** - Detailed deployment instructions
+- **[Application Summary](APPLICATION_SUMMARY.md)** - Full features and architecture
+- **[Supabase Setup](SUPABASE_SETUP.md)** - Technical integration details
+
+## ✨ Features
+
+### Client Side
+- 🏠 Browse restaurants and food items
+- 🔍 Search and filter functionality
+- 🛒 Shopping cart management
+- 📦 Order placement and tracking
+- 👤 User profile management
+- 📍 Delivery address management
+
+### Admin Side
+- 📊 Dashboard with statistics
+- 🏪 Restaurant management (CRUD)
+- 🍕 Food item management (CRUD)
+- 📁 Category management (CRUD)
+- 📋 Order management and status updates
+- 👥 User management
+- 🖼️ Image upload system
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React 18 + TypeScript + Vite
+- **UI**: shadcn/ui + Tailwind CSS
+- **Backend**: Supabase (PostgreSQL + Auth + Storage)
+- **Deployment**: Vercel
+- **State Management**: React Context API
+
+## 📁 Project Structure
 
 ```
-├── README.md # Documentation
-├── components.json # Component library configuration
-├── index.html # Entry file
-├── package.json # Package management
-├── postcss.config.js # PostCSS configuration
-├── public # Static resources directory
-│   ├── favicon.png # Icon
-│   └── images # Image resources
-├── src # Source code directory
-│   ├── App.tsx # Entry file
-│   ├── components # Components directory
-│   ├── context # Context directory
-│   ├── db # Database configuration directory
-│   ├── hooks # Common hooks directory
-│   ├── index.css # Global styles
-│   ├── layout # Layout directory
-│   ├── lib # Utility library directory
-│   ├── main.tsx # Entry file
-│   ├── routes.tsx # Routing configuration
-│   ├── pages # Pages directory
-│   ├── services # Database interaction directory
-│   ├── types # Type definitions directory
-├── tsconfig.app.json # TypeScript frontend configuration file
-├── tsconfig.json # TypeScript configuration file
-├── tsconfig.node.json # TypeScript Node.js configuration file
-└── vite.config.ts # Vite configuration file
+src/
+├── components/       # UI components
+├── contexts/         # React contexts (Auth)
+├── db/              # Supabase client and API
+├── hooks/           # Custom React hooks
+├── pages/           # Page components
+├── types/           # TypeScript types
+└── lib/             # Utility functions
 ```
 
-## Tech Stack
+## 🔐 Authentication
 
-Vite, TypeScript, React, Supabase
+- Username + password authentication
+- First registered user becomes admin automatically
+- Role-based access control (user/admin)
+- Protected routes with route guards
 
-## Development Guidelines
+## 🗄️ Database
 
-### How to edit code locally?
+7 tables with Row Level Security:
+- profiles (users)
+- categories
+- restaurants
+- food_items
+- orders
+- order_items
+- addresses
 
-You can choose [VSCode](https://code.visualstudio.com/Download) or any IDE you prefer. The only requirement is to have Node.js and npm installed.
+## 🖼️ Image Upload
 
-### Environment Requirements
+- Supabase Storage integration
+- Automatic image compression
+- Support for JPG, PNG, WEBP
+- 1MB file size limit
 
-```
-# Node.js ≥ 20
-# npm ≥ 10
-Example:
-# node -v   # v20.18.3
-# npm -v    # 10.8.2
-```
+## 🚀 Deployment
 
-### Installing Node.js on Windows
+### Deploy to Vercel
 
-```
-# Step 1: Visit the Node.js official website: https://nodejs.org/, click download. The website will automatically suggest a suitable version (32-bit or 64-bit) for your system.
-# Step 2: Run the installer: Double-click the downloaded installer to run it.
-# Step 3: Complete the installation: Follow the installation wizard to complete the process.
-# Step 4: Verify installation: Open Command Prompt (cmd) or your IDE terminal, and type `node -v` and `npm -v` to check if Node.js and npm are installed correctly.
-```
+1. Push code to GitHub
+2. Import project in Vercel
+3. Add environment variables
+4. Deploy!
 
-### Installing Node.js on macOS
+See [DEPLOYMENT_QUICKSTART.md](DEPLOYMENT_QUICKSTART.md) for detailed instructions.
 
-```
-# Step 1: Using Homebrew (Recommended method): Open Terminal. Type the command `brew install node` and press Enter. If Homebrew is not installed, you need to install it first by running the following command in Terminal:
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-Alternatively, use the official installer: Visit the Node.js official website. Download the macOS .pkg installer. Open the downloaded .pkg file and follow the prompts to complete the installation.
-# Step 2: Verify installation: Open Command Prompt (cmd) or your IDE terminal, and type `node -v` and `npm -v` to check if Node.js and npm are installed correctly.
-```
+## 📝 Environment Variables
 
-### After installation, follow these steps:
-
-```
-# Step 1: Download the code package
-# Step 2: Extract the code package
-# Step 3: Open the code package with your IDE and navigate into the code directory
-# Step 4: In the IDE terminal, run the command to install dependencies: npm i
-# Step 5: In the IDE terminal, run the command to start the development server: npm run dev -- --host 127.0.0.1
-# Step 6: if step 5 failed, try this command to start the development server: npx vite --host 127.0.0.1
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_APP_ID=your_app_id
 ```
 
-### How to develop backend services?
+## 🧪 Testing
 
-Configure environment variables and install relevant dependencies.If you need to use a database, please use the official version of Supabase.
+```bash
+# Run linting
+npm run lint
 
-## Learn More
+# Build for production
+npm run build
 
-You can also check the help documentation: Download and Building the app（ [https://intl.cloud.baidu.com/en/doc/MIAODA/s/download-and-building-the-app-en](https://intl.cloud.baidu.com/en/doc/MIAODA/s/download-and-building-the-app-en)）to learn more detailed content.
+# Preview production build
+npm run preview
+```
+
+## 📄 License
+
+MIT License - feel free to use this project for your own purposes.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📞 Support
+
+For issues and questions:
+- Check the documentation files
+- Review browser console for errors
+- Check Supabase logs
+- Open an issue on GitHub
+
+## 🎉 Acknowledgments
+
+- Built with [React](https://react.dev/)
+- UI components from [shadcn/ui](https://ui.shadcn.com/)
+- Backend powered by [Supabase](https://supabase.com/)
+- Deployed on [Vercel](https://vercel.com/)
+
+---
+
+**Ready to get started? Follow the [Deployment Quick Start Guide](DEPLOYMENT_QUICKSTART.md)!** 🚀

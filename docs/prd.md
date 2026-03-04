@@ -108,3 +108,18 @@ A complete food ordering platform similar to Swiggy/Zomato, featuring separate c
 - Complete order lifecycle management
 - Clean API structure
 - Role-based access control
+
+## 4. Deployment Requirements
+
+### 4.1 Supabase Integration
+- Connect user's Supabase account to the application
+- Configure Supabase project URL and API keys
+- Set up required database tables and schemas
+- Configure authentication settings
+- Set up storage buckets for image uploads
+
+### 4.2 Vercel Deployment
+- Deploy application to Vercel platform
+- Configure environment variables for Supabase connection
+- Set up continuous deployment from repository
+- Configure domain settings if applicable
