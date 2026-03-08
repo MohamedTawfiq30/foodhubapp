@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, Star, Filter } from 'lucide-react';
 import { getRestaurants, getCategories } from '@/db/api';
-import type { Restaurant, Category } from '@/types/types';
+import type { Restaurant, Category } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function RestaurantListPage() {

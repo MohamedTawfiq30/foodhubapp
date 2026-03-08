@@ -6,9 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { getOrderById } from '@/db/api';
-import type { Order } from '@/types/types';
+import type { Order } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { CheckCircle2, Clock, Truck, Package } from 'lucide-react';
+import { formatCurrency } from '@/lib/currency';
 
 const statusConfig = {
   pending: { label: 'Pending', icon: Clock, color: 'bg-warning/10 text-warning' },

@@ -9,10 +9,11 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { createOrder, getUserAddresses, createAddress } from '@/db/api';
-import type { CartItem, Address } from '@/types/types';
+import type { CartItem, Address } from '@/types';
 import { toast } from 'sonner';
 import { Plus } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { formatCurrency } from '@/lib/currency';
 
 export default function CheckoutPage() {
   const { user } = useAuth();

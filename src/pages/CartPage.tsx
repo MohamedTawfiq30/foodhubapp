@@ -4,7 +4,7 @@ import { MainLayout } from '@/components/layouts/MainLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
-import type { CartItem } from '@/types/types';
+import type { CartItem } from '@/types';
 import { toast } from 'sonner';
 import { formatCurrency } from '@/lib/currency';
 

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { getProfile, updateProfile, getUserAddresses, deleteAddress } from '@/db/api';
-import type { Profile, Address } from '@/types/types';
+import type { Profile, Address } from '@/types';
 import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Trash2 } from 'lucide-react';

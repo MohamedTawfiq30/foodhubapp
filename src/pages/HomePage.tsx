@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Search, Star } from 'lucide-react';
 import { getCategories, getRestaurants } from '@/db/api';
-import type { Category, Restaurant } from '@/types/types';
+import type { Category, Restaurant } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function HomePage() {

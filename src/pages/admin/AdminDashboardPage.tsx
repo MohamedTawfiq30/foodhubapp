@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { AdminLayout } from '@/components/layouts/AdminLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getDashboardStats } from '@/db/api';
-import type { DashboardStats } from '@/types/types';
+import type { DashboardStats } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ShoppingBag, DollarSign, Users, UtensilsCrossed } from 'lucide-react';
+import { formatCurrency, formatCurrencyCompact } from '@/lib/currency';
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);

@@ -6,9 +6,10 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { getAllOrders, updateOrderStatus } from '@/db/api';
-import type { Order, OrderStatus } from '@/types/types';
+import type { Order, OrderStatus } from '@/types';
 import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
+import { formatCurrency } from '@/lib/currency';
 
 const statusConfig = {
   pending: { label: 'Pending', color: 'bg-warning/10 text-warning' },

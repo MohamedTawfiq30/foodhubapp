@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getUserOrders } from '@/db/api';
-import type { Order } from '@/types/types';
+import type { Order } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ShoppingBag } from 'lucide-react';
 import { formatCurrency } from '@/lib/currency';

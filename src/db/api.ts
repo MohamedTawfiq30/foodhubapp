@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { Profile, Category, Restaurant, FoodItem, Order, OrderItem, Address, DashboardStats, OrderStatus } from '@/types/types';
+import type { Profile, Category, Restaurant, FoodItem, Order, OrderItem, Address, DashboardStats, OrderStatus } from '@/types';
 
 // ============ Categories ============
 export async function getCategories(): Promise<Category[]> {

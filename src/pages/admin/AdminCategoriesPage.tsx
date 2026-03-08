@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { getCategories, createCategory, deleteCategory } from '@/db/api';
-import type { Category } from '@/types/types';
+import type { Category } from '@/types';
 import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Plus, Trash2 } from 'lucide-react';
@@ -20,7 +20,17 @@ export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { uploadFile, uploading, onUpload, ...dropzoneProps } = useSupabaseUpload({ bucketName: 'app-a04i0mry03k1_food_images', supabase });
+  
+  const uploadProps = useSupabaseUpload({
+    bucketName: 'food-images',
+    path: 'categories',
+    allowedMimeTypes: ['image/*'],
+    maxFileSize: 1024 * 1024,
+    maxFiles: 1,
+    supabase
+  });
+  
+  const { files, setFiles, onUpload, loading: uploading } = uploadProps;
 
   const [formData, setFormData] = useState({
     name: '',
@@ -44,13 +54,13 @@ export default function AdminCategoriesPage() {
   };
 
   const handleImageUpload = async () => {
-    if (dropzoneProps.files.length === 0) return;
+    if (files.length === 0) return;
     await onUpload();
-    if (dropzoneProps.files[0]) {
-      const file = dropzoneProps.files[0];
+    if (files[0]) {
+      const file = files[0];
       const fileName = `${Date.now()}_${file.name}`;
       const { data } = supabase.storage
-        .from('app-a04i0mry03k1_food_images')
+        .from('food-images')
         .getPublicUrl(fileName);
       setFormData({ ...formData, image_url: data.publicUrl });
     }
@@ -136,10 +146,28 @@ export default function AdminCategoriesPage() {
                 </div>
                 <div>
                   <Label>Image</Label>
-                  <Dropzone {...dropzoneProps}>
+                  <Dropzone {...uploadProps}>
                     <DropzoneEmptyState />
                     <DropzoneContent />
                   </Dropzone>
+                  {files.length > 0 && (
+                    <Button
+                      type="button"
+                      onClick={async () => {
+                        await onUpload();
+                        if (files[0]) {
+                          const { data } = supabase.storage
+                            .from('food-images')
+                            .getPublicUrl(`categories/${files[0].name}`);
+                          setFormData({ ...formData, image_url: data.publicUrl });
+                        }
+                      }}
+                      disabled={uploading}
+                      className="mt-2"
+                    >
+                      {uploading ? 'Uploading...' : 'Upload Image'}
+                    </Button>
+                  )}
                   {formData.image_url && (
                     <img src={formData.image_url} alt="Preview" className="mt-2 h-32 w-32 object-cover rounded" />
                   )}
