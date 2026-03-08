@@ -10,6 +10,7 @@ import { getUserOrders } from '@/db/api';
 import type { Order } from '@/types/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ShoppingBag } from 'lucide-react';
+import { formatCurrency } from '@/lib/currency';
 
 const statusConfig = {
   pending: { label: 'Pending', color: 'bg-warning/10 text-warning' },
@@ -129,7 +130,7 @@ export default function OrderHistoryPage() {
 
                         <div className="flex items-center justify-between pt-4 border-t">
                           <span className="font-bold text-lg text-primary">
-                            ${order.total_amount.toFixed(2)}
+                            {formatCurrency(order.total_amount)}
                           </span>
                           <Button variant="outline" size="sm">
                             View Details

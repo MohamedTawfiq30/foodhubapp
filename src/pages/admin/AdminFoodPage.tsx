@@ -187,13 +187,14 @@ export default function AdminFoodPage() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="price">Price *</Label>
+                    <Label htmlFor="price">Price (₹) *</Label>
                     <Input
                       id="price"
                       type="number"
                       step="0.01"
                       value={formData.price}
                       onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                      placeholder="Enter price in INR"
                     />
                   </div>
                   <div>
@@ -284,7 +285,7 @@ export default function AdminFoodPage() {
                       <TableCell className="font-medium">{item.name}</TableCell>
                       <TableCell>{item.restaurant?.name}</TableCell>
                       <TableCell>{item.category?.name || 'N/A'}</TableCell>
-                      <TableCell>${item.price.toFixed(2)}</TableCell>
+                      <TableCell>₹{item.price.toFixed(2)}</TableCell>
                       <TableCell>
                         <Badge variant={item.is_veg ? 'secondary' : 'outline'}>
                           {item.is_veg ? '🌱 Veg' : '🍖 Non-Veg'}

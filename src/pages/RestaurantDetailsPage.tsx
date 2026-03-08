@@ -10,6 +10,7 @@ import { getRestaurantById, getFoodItemsByRestaurant, getCategories } from '@/db
 import type { Restaurant, FoodItem, Category, CartItem } from '@/types/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from 'sonner';
+import { formatCurrency } from '@/lib/currency';
 
 export default function RestaurantDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -208,7 +209,7 @@ export default function RestaurantDetailsPage() {
                     {item.description}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-primary">${item.price.toFixed(2)}</span>
+                    <span className="text-lg font-bold text-primary">{formatCurrency(item.price)}</span>
                     <Button onClick={() => addToCart(item)} size="sm">
                       <Plus className="h-4 w-4 mr-1" />
                       Add

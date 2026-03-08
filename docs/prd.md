@@ -109,6 +109,11 @@ A complete food ordering platform similar to Swiggy/Zomato, featuring separate c
 - Clean API structure
 - Role-based access control
 
+### 3.4 Currency
+- All prices displayed in Indian Rupees (₹)
+- Currency symbol: ₹
+- Price formatting: ₹XXX.XX
+
 ## 4. Supabase Integration Guide
 
 ### 4.1 Prerequisites

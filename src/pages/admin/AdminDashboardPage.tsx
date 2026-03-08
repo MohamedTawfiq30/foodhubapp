@@ -34,7 +34,7 @@ export default function AdminDashboardPage() {
     },
     {
       title: 'Total Revenue',
-      value: `$${stats?.total_revenue.toFixed(2) || '0.00'}`,
+      value: stats ? formatCurrencyCompact(stats.total_revenue) : formatCurrency(0),
       icon: DollarSign,
       color: 'text-secondary'
     },

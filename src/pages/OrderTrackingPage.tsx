@@ -145,7 +145,7 @@ export default function OrderTrackingPage() {
                 </div>
                 <div>
                   <p className="text-muted-foreground">Total Amount</p>
-                  <p className="font-medium text-primary">${order.total_amount.toFixed(2)}</p>
+                  <p className="font-medium text-primary">{formatCurrency(order.total_amount)}</p>
                 </div>
               </div>
               <div>
@@ -168,7 +168,7 @@ export default function OrderTrackingPage() {
                       <p className="font-medium">{item.food_name}</p>
                       <p className="text-sm text-muted-foreground">Quantity: {item.quantity}</p>
                     </div>
-                    <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-medium">{formatCurrency(item.price * item.quantity)}</p>
                   </div>
                 ))}
               </div>
