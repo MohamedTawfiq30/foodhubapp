@@ -20,17 +20,13 @@ export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
-  
+
   const uploadProps = useSupabaseUpload({
-    bucketName: 'food-images',
-    path: 'categories',
-    allowedMimeTypes: ['image/*'],
-    maxFileSize: 1024 * 1024,
-    maxFiles: 1,
+    bucketName: 'app-a04i0mry03k1_food_images',
     supabase
   });
-  
-  const { files, setFiles, onUpload, loading: uploading } = uploadProps;
+
+  const { loading: uploading } = uploadProps;
 
   const [formData, setFormData] = useState({
     name: '',
@@ -54,16 +50,18 @@ export default function AdminCategoriesPage() {
   };
 
   const handleImageUpload = async () => {
-    if (files.length === 0) return;
-    await onUpload();
-    if (files[0]) {
-      const file = files[0];
-      const fileName = `${Date.now()}_${file.name}`;
-      const { data } = supabase.storage
-        .from('food-images')
-        .getPublicUrl(fileName);
-      setFormData({ ...formData, image_url: data.publicUrl });
-    }
+    if (uploadProps.files.length === 0) return;
+
+    const fileName = uploadProps.files[0].name;
+
+    await uploadProps.onUpload();
+
+    const { data } = supabase.storage
+      .from('app-a04i0mry03k1_food_images')
+      .getPublicUrl(fileName);
+
+    setFormData(prev => ({ ...prev, image_url: data.publicUrl }));
+    toast.success('Image uploaded successfully');
   };
 
   const handleSubmit = async () => {
@@ -150,22 +148,9 @@ export default function AdminCategoriesPage() {
                     <DropzoneEmptyState />
                     <DropzoneContent />
                   </Dropzone>
-                  {files.length > 0 && (
-                    <Button
-                      type="button"
-                      onClick={async () => {
-                        await onUpload();
-                        if (files[0]) {
-                          const { data } = supabase.storage
-                            .from('food-images')
-                            .getPublicUrl(`categories/${files[0].name}`);
-                          setFormData({ ...formData, image_url: data.publicUrl });
-                        }
-                      }}
-                      disabled={uploading}
-                      className="mt-2"
-                    >
-                      {uploading ? 'Uploading...' : 'Upload Image'}
+                  {uploadProps.isSuccess && (
+                    <Button onClick={handleImageUpload} className="mt-2 w-full" variant="outline" type="button">
+                      Use Uploaded Image
                     </Button>
                   )}
                   {formData.image_url && (

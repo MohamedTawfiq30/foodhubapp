@@ -17,7 +17,6 @@ import { Plus, Pencil, Trash2, Star } from 'lucide-react';
 import { useSupabaseUpload } from '@/hooks/use-supabase-upload';
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/dropzone';
 import { supabase } from '@/db/supabase';
-import { STORAGE_BUCKET_NAME } from '@/config/storage';
 
 export default function AdminRestaurantsPage() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
@@ -54,17 +53,21 @@ export default function AdminRestaurantsPage() {
 
   const handleImageUpload = async () => {
     if (dropzoneProps.files.length === 0) return;
+
+    const fileName = dropzoneProps.files[0].name;
+
     await dropzoneProps.onUpload();
-    
-    // Get the uploaded file URL from successes
-    if (dropzoneProps.successes.length > 0) {
-      const fileName = dropzoneProps.successes[0];
-      const { data } = supabase.storage
-        .from(STORAGE_BUCKET_NAME)
-        .getPublicUrl(fileName);
-      setFormData({ ...formData, image_url: data.publicUrl });
-      toast.success('Image uploaded successfully');
-    }
+
+    const { data } = supabase.storage
+      .from('app-a04i0mry03k1_food_images')
+      .getPublicUrl(fileName);
+
+    setFormData(prev => ({
+      ...prev,
+      image_url: data.publicUrl
+    }));
+
+    toast.success("Image uploaded successfully");
   };
 
   const handleSubmit = async () => {
