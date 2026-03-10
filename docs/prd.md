@@ -6,7 +6,7 @@
 Food Ordering System
 
 ### 1.2 Application Description
-A complete food ordering platform similar to Swiggy/Zomato, featuring separate client-side and admin-side interfaces. The system enables users to browse restaurants, order food, track deliveries, and manage their profiles, while administrators can manage food items, categories, orders, users, and restaurants.
+A complete food ordering platform similar to Swiggy/Zomato, featuring separate client-side and admin-side interfaces. The system enables users to browse restaurants, order food, track deliveries, and manage their profiles, while administrators can manage food items, categories, orders, users, and restaurants, along with comprehensive analytics capabilities.
 
 ## 2. Application Features
 
@@ -65,26 +65,31 @@ A complete food ordering platform similar to Swiggy/Zomato, featuring separate c
 - Display total users
 - Display total food items
 
-#### 2.2.3 Food Management
+#### 2.2.3 Analytics Dashboard
+- Most ordered food items with order count
+- Most ordered restaurants with order count
+- Other relevant analytics metrics
+
+#### 2.2.4 Food Management
 - Add new food item
 - Edit existing food item
 - Delete food item
 - Toggle item availability
 
-#### 2.2.4 Category Management
+#### 2.2.5 Category Management
 - Add new categories
 - Remove categories
 
-#### 2.2.5 Restaurant Management
+#### 2.2.6 Restaurant Management
 - Add new restaurant
 - Remove restaurant
 
-#### 2.2.6 Orders Management
+#### 2.2.7 Orders Management
 - View all orders
 - View order details
 - Update order status: Pending / Preparing / Out for Delivery / Delivered
 
-#### 2.2.7 Users Management
+#### 2.2.8 Users Management
 - View all registered users
 
 ## 3. Technical Requirements
@@ -108,6 +113,7 @@ A complete food ordering platform similar to Swiggy/Zomato, featuring separate c
 - Complete order lifecycle management
 - Clean API structure
 - Role-based access control
+- Analytics data aggregation and visualization
 
 ### 3.4 Currency
 - All prices displayed in Indian Rupees (₹)
@@ -144,6 +150,7 @@ A complete food ordering platform similar to Swiggy/Zomato, featuring separate c
 - Implement real-time subscriptions for order status updates
 - Use Supabase Storage API for image upload and retrieval
 - Handle authentication state changes and token management
+- Implement analytics queries for aggregating order data
 
 ## 5. Deployment Requirements
 

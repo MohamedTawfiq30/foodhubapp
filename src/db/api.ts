@@ -1,5 +1,20 @@
 import { supabase } from './supabase';
-import type { Profile, Category, Restaurant, FoodItem, Order, OrderItem, Address, DashboardStats, OrderStatus } from '@/types';
+import type { 
+  Profile, 
+  Category, 
+  Restaurant, 
+  FoodItem, 
+  Order, 
+  OrderItem, 
+  Address, 
+  DashboardStats, 
+  OrderStatus,
+  FoodItemAnalytics,
+  RestaurantAnalytics,
+  RevenueByDate,
+  OrderStatusDistribution,
+  CategoryAnalytics
+} from '@/types';
 
 // ============ Categories ============
 export async function getCategories(): Promise<Category[]> {
@@ -404,3 +419,62 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     total_food_items: foodItemsResult.count || 0
   };
 }
+
+
+// ============ Analytics ============
+
+export async function getMostOrderedFoodItems(limit: number = 10): Promise<FoodItemAnalytics[]> {
+  const { data, error } = await supabase.rpc('get_most_ordered_food_items', { item_limit: limit });
+  
+  if (error) {
+    console.error('Error fetching most ordered food items:', error);
+    return [];
+  }
+  
+  return Array.isArray(data) ? data : [];
+}
+
+export async function getMostOrderedRestaurants(limit: number = 10): Promise<RestaurantAnalytics[]> {
+  const { data, error } = await supabase.rpc('get_most_ordered_restaurants', { restaurant_limit: limit });
+  
+  if (error) {
+    console.error('Error fetching most ordered restaurants:', error);
+    return [];
+  }
+  
+  return Array.isArray(data) ? data : [];
+}
+
+export async function getRevenueByDate(days: number = 30): Promise<RevenueByDate[]> {
+  const { data, error } = await supabase.rpc('get_revenue_by_date', { days_back: days });
+  
+  if (error) {
+    console.error('Error fetching revenue by date:', error);
+    return [];
+  }
+  
+  return Array.isArray(data) ? data : [];
+}
+
+export async function getOrderStatusDistribution(): Promise<OrderStatusDistribution[]> {
+  const { data, error } = await supabase.rpc('get_order_status_distribution');
+  
+  if (error) {
+    console.error('Error fetching order status distribution:', error);
+    return [];
+  }
+  
+  return Array.isArray(data) ? data : [];
+}
+
+export async function getCategoryAnalytics(): Promise<CategoryAnalytics[]> {
+  const { data, error } = await supabase.rpc('get_category_analytics');
+  
+  if (error) {
+    console.error('Error fetching category analytics:', error);
+    return [];
+  }
+  
+  return Array.isArray(data) ? data : [];
+}
+

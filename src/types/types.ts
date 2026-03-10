@@ -98,3 +98,41 @@ export interface DashboardStats {
   total_users: number;
   total_food_items: number;
 }
+
+export interface FoodItemAnalytics {
+  id: string;
+  name: string;
+  image_url: string | null;
+  total_orders: number;
+  total_quantity: number;
+  total_revenue: number;
+  restaurant_name: string;
+}
+
+export interface RestaurantAnalytics {
+  id: string;
+  name: string;
+  image_url: string | null;
+  total_orders: number;
+  total_revenue: number;
+  average_order_value: number;
+}
+
+export interface RevenueByDate {
+  date: string;
+  revenue: number;
+  order_count: number;
+}
+
+export interface OrderStatusDistribution {
+  status: OrderStatus;
+  count: number;
+  percentage: number;
+}
+
+export interface CategoryAnalytics {
+  id: string;
+  name: string;
+  total_orders: number;
+  total_revenue: number;
+}
