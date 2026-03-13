@@ -17,13 +17,14 @@ import { Plus, Pencil, Trash2, Star } from 'lucide-react';
 import { useSupabaseUpload } from '@/hooks/use-supabase-upload';
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/dropzone';
 import { supabase } from '@/db/supabase';
+import { STORAGE_BUCKET_NAME } from '@/config/storage';
 
 export default function AdminRestaurantsPage() {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingRestaurant, setEditingRestaurant] = useState<Restaurant | null>(null);
-  const dropzoneProps = useSupabaseUpload({ bucketName: 'app-a04i0mry03k1_food_images', supabase });
+  const dropzoneProps = useSupabaseUpload({ bucketName: STORAGE_BUCKET_NAME, supabase });
 
   const [formData, setFormData] = useState({
     name: '',
@@ -59,7 +60,7 @@ export default function AdminRestaurantsPage() {
     await dropzoneProps.onUpload();
 
     const { data } = supabase.storage
-      .from('app-a04i0mry03k1_food_images')
+      .from(STORAGE_BUCKET_NAME)
       .getPublicUrl(fileName);
 
     setFormData(prev => ({

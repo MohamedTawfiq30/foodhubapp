@@ -15,6 +15,7 @@ import { Plus, Trash2 } from 'lucide-react';
 import { useSupabaseUpload } from '@/hooks/use-supabase-upload';
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/dropzone';
 import { supabase } from '@/db/supabase';
+import { STORAGE_BUCKET_NAME } from '@/config/storage';
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -22,7 +23,7 @@ export default function AdminCategoriesPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const uploadProps = useSupabaseUpload({
-    bucketName: 'app-a04i0mry03k1_food_images',
+    bucketName: STORAGE_BUCKET_NAME,
     supabase
   });
 
@@ -57,7 +58,7 @@ export default function AdminCategoriesPage() {
     await uploadProps.onUpload();
 
     const { data } = supabase.storage
-      .from('app-a04i0mry03k1_food_images')
+      .from(STORAGE_BUCKET_NAME)
       .getPublicUrl(fileName);
 
     setFormData(prev => ({ ...prev, image_url: data.publicUrl }));
