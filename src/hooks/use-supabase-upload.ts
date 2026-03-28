@@ -55,6 +55,14 @@ type UseSupabaseUploadOptions = {
 
 type UseSupabaseUploadReturn = ReturnType<typeof useSupabaseUpload>
 
+/** Stable object key in the bucket (avoids collisions when two uploads use the same file name). */
+function storageObjectPath(folder: string | undefined, file: File): string {
+  const safe =
+    file.name.replace(/[^\w.\-]/g, '_').replace(/^\.+/, '') || 'image'
+  const key = `${crypto.randomUUID()}_${safe}`
+  return folder ? `${folder}/${key}` : key
+}
+
 const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
   const {
     bucketName,
@@ -114,7 +122,7 @@ const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
     multiple: maxFiles !== 1,
   })
 
-  const onUpload = useCallback(async () => {
+  const onUpload = useCallback(async (): Promise<string[]> => {
     setLoading(true)
 
     // [Joshen] This is to support handling partial successes
@@ -130,32 +138,39 @@ const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
 
     const responses = await Promise.all(
       filesToUpload.map(async (file) => {
+        const objectPath = storageObjectPath(path, file)
         const { error } = await supabase.storage
           .from(bucketName)
-          .upload(!!path ? `${path}/${file.name}` : file.name, file, {
+          .upload(objectPath, file, {
             cacheControl: cacheControl.toString(),
             upsert,
           })
         if (error) {
-          return { name: file.name, message: error.message }
-        } else {
-          return { name: file.name, message: undefined }
+          return { name: file.name, objectPath, message: error.message }
         }
+        return { name: file.name, objectPath }
       })
     )
 
-    const responseErrors = responses.filter((x) => x.message !== undefined)
+    const responseErrors = responses.filter(
+      (x): x is { name: string; objectPath: string; message: string } =>
+        'message' in x
+    )
     // if there were errors previously, this function tried to upload the files again so we should clear/overwrite the existing errors.
-    setErrors(responseErrors)
+    setErrors(responseErrors.map((x) => ({ name: x.name, message: x.message })))
 
-    const responseSuccesses = responses.filter((x) => x.message === undefined)
+    const responseSuccesses = responses.filter(
+      (x): x is { name: string; objectPath: string } => !('message' in x)
+    )
     const newSuccesses = Array.from(
       new Set([...successes, ...responseSuccesses.map((x) => x.name)])
     )
     setSuccesses(newSuccesses)
 
     setLoading(false)
-  }, [files, path, bucketName, errors, successes])
+
+    return responseSuccesses.map((x) => x.objectPath)
+  }, [files, path, bucketName, errors, successes, supabase, upsert, cacheControl])
 
   useEffect(() => {
     if (files.length === 0) {

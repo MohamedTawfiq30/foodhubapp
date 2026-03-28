@@ -30,7 +30,8 @@ export default function AdminFoodPage() {
 
   const uploadProps = useSupabaseUpload({
     bucketName: STORAGE_BUCKET_NAME,
-    supabase
+    supabase,
+    upsert: true,
   });
 
   const { loading: uploading } = uploadProps;
@@ -70,15 +71,17 @@ export default function AdminFoodPage() {
   const handleImageUpload = async () => {
     if (uploadProps.files.length === 0) return;
 
-    const fileName = uploadProps.files[0].name;
-
-    await uploadProps.onUpload();
+    const paths = await uploadProps.onUpload();
+    if (paths.length === 0) {
+      toast.error('Image upload failed — check Storage policies and the food-images bucket.');
+      return;
+    }
 
     const { data } = supabase.storage
       .from(STORAGE_BUCKET_NAME)
-      .getPublicUrl(fileName);
+      .getPublicUrl(paths[0]!);
 
-    setFormData(prev => ({ ...prev, image_url: data.publicUrl }));
+    setFormData((prev) => ({ ...prev, image_url: data.publicUrl }));
     toast.success('Image uploaded successfully');
   };
 

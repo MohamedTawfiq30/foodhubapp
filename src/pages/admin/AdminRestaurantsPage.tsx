@@ -24,7 +24,11 @@ export default function AdminRestaurantsPage() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingRestaurant, setEditingRestaurant] = useState<Restaurant | null>(null);
-  const dropzoneProps = useSupabaseUpload({ bucketName: STORAGE_BUCKET_NAME, supabase });
+  const dropzoneProps = useSupabaseUpload({
+    bucketName: STORAGE_BUCKET_NAME,
+    supabase,
+    upsert: true,
+  });
 
   const [formData, setFormData] = useState({
     name: '',
@@ -55,20 +59,22 @@ export default function AdminRestaurantsPage() {
   const handleImageUpload = async () => {
     if (dropzoneProps.files.length === 0) return;
 
-    const fileName = dropzoneProps.files[0].name;
-
-    await dropzoneProps.onUpload();
+    const paths = await dropzoneProps.onUpload();
+    if (paths.length === 0) {
+      toast.error('Image upload failed — check Storage policies and the food-images bucket.');
+      return;
+    }
 
     const { data } = supabase.storage
       .from(STORAGE_BUCKET_NAME)
-      .getPublicUrl(fileName);
+      .getPublicUrl(paths[0]!);
 
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      image_url: data.publicUrl
+      image_url: data.publicUrl,
     }));
 
-    toast.success("Image uploaded successfully");
+    toast.success('Image uploaded successfully');
   };
 
   const handleSubmit = async () => {
